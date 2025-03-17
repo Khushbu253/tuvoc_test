@@ -54,9 +54,8 @@ const ProductListPage: React.FC = () => {
   return (
     <div className="min-h-screen">
       <Header />
-
-      <div className="container mx-auto p-4 pb-20 flex">
-        <aside className="w-1/4 bg-white p-4 shadow rounded-lg">
+      <div className="container mx-auto p-4 pb-20 flex flex-col md:flex-row">
+        <aside className="w-full md:w-1/4 bg-white p-4 shadow rounded-lg mb-4 md:mb-0">
           <h2 className="font-semibold mb-4">Categories</h2>
           <ul>
             {["Electronics", "Clothing", "Home & Garden", "Sports", "Books"].map((category) => (
@@ -65,33 +64,10 @@ const ProductListPage: React.FC = () => {
               </li>
             ))}
           </ul>
-
-          <h2 className="font-semibold mt-6 mb-4">Price Range</h2>
-          <input type="number" placeholder="Min" className="border p-2 w-20 mr-2 rounded" />
-          <input type="number" placeholder="Max" className="border p-2 w-20 rounded" />
-
-          <h2 className="font-semibold mt-6 mb-4">Brands</h2>
-          <ul>
-            {["Apple", "Samsung", "Nike", "Adidas", "Sony"].map((brand) => (
-              <li key={brand} className="mb-2">
-                <input type="checkbox" className="mr-2" /> {brand}
-              </li>
-            ))}
-          </ul>
-
-          <h2 className="font-semibold mt-6 mb-4">Rating</h2>
-          <ul>
-            {[5, 4, 3, 2, 1].map((rating) => (
-              <li key={rating} className="mb-2">
-                <input type="checkbox" className="mr-2" />
-                <span className="text-yellow-500">{"★".repeat(rating)}{"☆".repeat(5 - rating)}</span> & Up
-              </li>
-            ))}
-          </ul>
         </aside>
 
-        <main className="w-3/4 p-4">
-          <div className="flex justify-between mb-4">
+        <main className="w-full md:w-3/4 p-4">
+          <div className="flex flex-col sm:flex-row justify-between mb-4">
             <p>
               Showing {indexOfFirstProduct + 1}-
               {Math.min(indexOfLastProduct, items.length)} of {items.length} products
@@ -109,7 +85,7 @@ const ProductListPage: React.FC = () => {
           {status === "loading" && <p className="text-center">Loading products...</p>}
           {error && <p className="text-red-500">Error: {error}</p>}
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {currentProducts?.map((product) => (
               <div key={product.id} className="bg-white p-4 shadow rounded-lg">
                 <div onClick={() => handleDetails(product.id)}>
@@ -117,7 +93,7 @@ const ProductListPage: React.FC = () => {
                   <h3 className="font-semibold mt-2 text-sm md:text-base lg:text-lg truncate w-full">{product.title}</h3>
                   <div className="flex">{renderStars(product.rating.rate)} {`(${product.rating.count})`}</div>
                 </div>
-                <div className="flex justify-between align-items-center mt-2">
+                <div className="flex justify-between items-center mt-2">
                   <p className="font-bold">${product.price.toFixed(2)}</p>
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -133,7 +109,6 @@ const ProductListPage: React.FC = () => {
             ))}
           </div>
 
-          {/* Pagination */}
           {currentProducts.length !== 0 && (
             <div className="flex justify-center mt-8 space-x-2">
               <button
@@ -163,7 +138,6 @@ const ProductListPage: React.FC = () => {
           )}
         </main>
       </div>
-
       <Footer />
     </div>
   );

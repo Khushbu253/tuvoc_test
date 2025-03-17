@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordType, setPasswordType] = useState<string>("");
+  const [showPassword,setShowPassword] = useState<boolean>(false)
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
@@ -42,7 +45,15 @@ const LoginPage: React.FC = () => {
     setError("")
   } 
 
-  
+  const handleToggle = () => {
+    if (passwordType==='password'){
+       setShowPassword(true);
+       setPasswordType('text')
+    } else {
+       setShowPassword(false)
+       setPasswordType('password')
+    }
+ }
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -73,13 +84,14 @@ const LoginPage: React.FC = () => {
           <label className="block mb-2 text-gray-700">Password</label>
           <div className="relative">
             <input 
-              type="password" 
+              type={passwordType}
               placeholder="Enter your password" 
               className="w-full p-3 border rounded-lg" 
               value={password} 
               onChange={ handlechangePassword }
             />
-            <span className="absolute right-3 top-3 cursor-pointer">👁️</span>
+         <span className="absolute right-3 top-3 cursor-pointer" onClick={handleToggle}>{showPassword ? <FaRegEye /> : <FaRegEyeSlash />}</span>
+         
           </div>
           {error && <p className="text-red-500 text-start mb-4 mt-4">{error}</p>}
           

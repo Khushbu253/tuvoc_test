@@ -50,7 +50,7 @@ const Header: React.FC = () => {
                           onClick={() => {
                             localStorage.removeItem("user");
                             localStorage.removeItem("token");
-                            navigate("/login");
+                            navigate("/");
                           }}
                           className="w-full text-center px-4 py-2 text-red-600 hover:bg-gray-100"
                         >

@@ -16,9 +16,9 @@ const CartPage: React.FC = () => {
   const getCartProducts = useCallback(async () => {
     const data: any = await axios('https://fakestoreapi.com/carts/user/2')
     if (data.data.length > 0) {
-      const currentUserData = data?.data?.find((x) => x.userId === 2)?.products
+      const currentCartData = data?.data?.find((x) => x.userId === 2)?.products
       dispatch(resetCart([] as any))
-      await currentUserData.forEach(async (product) => {
+      await currentCartData.forEach(async (product) => {
         const cartValue = await getDetailOfProduct(product)
         dispatch(addToCart(cartValue as any))
       });
@@ -52,7 +52,7 @@ const CartPage: React.FC = () => {
 
     } else if (action === 'remove') {
       await  deleteCartProduct(item)
-      await  getCartProducts()
+       await  getCartProducts()
     }
   }, [])
 
